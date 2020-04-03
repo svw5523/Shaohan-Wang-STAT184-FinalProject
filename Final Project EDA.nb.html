@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Yixiao Jiang; Shaohan Wang" />
 
 
 <title>Final Project EDA</title>
@@ -1744,17 +1745,21 @@ summary {
 
 
 <h1 class="title toc-ignore">Final Project EDA</h1>
+<h4 class="author">Yixiao Jiang; Shaohan Wang</h4>
+<h4 class="date">April 3rd, 2020</h4>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<div id="guiding-question" class="section level3">
-<h3>Guiding Question</h3>
-<p>What are some factors that impact the growth rate of the virus?</p>
+<div id="guiding-question" class="section level2">
+<h2>Guiding Question</h2>
+<div id="what-are-some-factors-that-impact-the-growth-rate-of-the-virus" class="section level3">
+<h3>What are some factors that impact the growth rate of the virus?</h3>
 </div>
-<div id="data-sources" class="section level3">
-<h3>Data Sources</h3>
+</div>
+<div id="data-sources" class="section level2">
+<h2>Data Sources</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdCA9IGxzKCkpXG5saWJyYXJ5KHJlYWRyKVxubGlicmFyeShEYXRhQ29tcHV0aW5nKVxubGlicmFyeShkcGx5cilcbmNvdmlkXzE5X2RhdGEgPC0gcmVhZF9jc3YoXCJjb3ZpZF8xOV9kYXRhLmNzdlwiKVxuYGBgIn0= -->
@@ -1779,12 +1784,9 @@ cols(
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<ol style="list-style-type: decimal">
-<li>Where did you find them? We obtained dataset from Kaggle. <a href="https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset" class="uri">https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset</a></li>
-<li>Who collected/maintains them? The data was extracted from the Johns Hopkins University and it continuously updates.</li>
-<li>When &amp; Why were they originally collected? This Coronavirus data is available from Jan. 22nd, 2020. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public.</li>
-<li>What does a case represent in each data source, and how many total cases are available?</li>
-</ol>
+<div id="where-did-you-find-them" class="section level3">
+<h3>1. Where did you find them?</h3>
+<p>We obtained dataset from Kaggle. <a href="https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset" class="uri">https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset</a> ### 2. Who collected/maintains them? The data was extracted from the Johns Hopkins University and it continuously updates. ### 3. When &amp; Why were they originally collected? This Coronavirus data is available from Jan. 22nd, 2020. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public. ### 4. What does a case represent in each data source, and how many total cases are available?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnJvdyhjb3ZpZF8xOV9kYXRhKVxuYGBgIn0= -->
@@ -1795,7 +1797,7 @@ cols(
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>The case represent an individual exposed to the virus. There are 11299 cases in total. 5. What are some of the variables that you plan to use?</p>
+<p>The case represent an individual exposed to the virus. There are 11299 cases in total. ### 5. What are some of the variables that you plan to use?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmNvbChjb3ZpZF8xOV9kYXRhKVxuYGBgIn0= -->
@@ -1859,11 +1861,11 @@ cols(
 <!-- rnb-text-begin -->
 <p>There are total of 8 variables, and we planned to use “Country/Region”, “Deaths”, and “Recovered” to discover the research question.</p>
 </div>
-<div id="intuition-related-to-research-question" class="section level3">
-<h3>Intuition Related to Research Question</h3>
-<ol style="list-style-type: decimal">
-<li>Create some informative plots and summary statistics</li>
-</ol>
+</div>
+<div id="intuition-related-to-research-question" class="section level2">
+<h2>Intuition Related to Research Question</h2>
+<div id="create-some-informative-plots-and-summary-statistics" class="section level3">
+<h3>1. Create some informative plots and summary statistics</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTmV3RGF0YSA8LSBjb3ZpZF8xOV9kYXRhWyAsYyg0LDcsOCldXG4jQ3JlYXRlIGRhdGEgdGFibGUgZ3JvdXBlZCBieSBjb3VudHJ5XG5TdW1tYXJ5U3RhdHMgPC1cbiAgTmV3RGF0YSAlPiVcbiAgZ3JvdXBfYnkoYENvdW50cnkvUmVnaW9uYCkgJT4lXG4gIHN1bW1hcmlzZShjb3VudCA9IG4oKSwgZGVhdGggPSBzdW0oaWZlbHNlKERlYXRocyA9PSAwLCAwLCAxKSksIHJlY292ZXJlZCA9IHN1bShpZmVsc2UoUmVjb3ZlcmVkID09IDAsIDAsIDEpKSlcbiNwbG90cyB1c2luZyB3b3JsZCBtYXBcbldvcmxkTWFwKFN1bW1hcnlTdGF0cywga2V5ID0gYENvdW50cnkvUmVnaW9uYCwgZmlsbCA9IGNvdW50KVxuYGBgIn0= -->
@@ -1885,16 +1887,18 @@ WorldMap(SummaryStats, key = `Country/Region`, fill = count)</code></pre>
 <!-- rnb-plot-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<ol start="2" style="list-style-type: decimal">
-<li>Describe preliminary observations and intuition about the research question Some factors contributed to the growth rate of the virus might deal with the location with it corresponding humidity and weather temperature.</li>
-</ol>
 </div>
-<div id="two-data-sources" class="section level3">
-<h3>Two Data Sources</h3>
+<div id="describe-preliminary-observations-and-intuition-about-the-research-question" class="section level3">
+<h3>2. Describe preliminary observations and intuition about the research question</h3>
+<p>Some factors contributed to the growth rate of the virus might deal with the location with it corresponding humidity and weather temperature.</p>
+</div>
+</div>
+<div id="two-data-sources" class="section level2">
+<h2>Two Data Sources</h2>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYWwgUHJvamVjdCBFREEiCm5hbWU6ICJZaXhpYW8gSmlhbmcgJiBTaGFvaGFuIFdhbmciCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMjIyBHdWlkaW5nIFF1ZXN0aW9uCldoYXQgYXJlIHNvbWUgZmFjdG9ycyB0aGF0IGltcGFjdCB0aGUgZ3Jvd3RoIHJhdGUgb2YgdGhlIHZpcnVzPwoKIyMjIERhdGEgU291cmNlcwpgYGB7cn0Kcm0obGlzdCA9IGxzKCkpCmxpYnJhcnkocmVhZHIpCmxpYnJhcnkoRGF0YUNvbXB1dGluZykKbGlicmFyeShkcGx5cikKY292aWRfMTlfZGF0YSA8LSByZWFkX2NzdigiY292aWRfMTlfZGF0YS5jc3YiKQpgYGAKCjEuIFdoZXJlIGRpZCB5b3UgZmluZCB0aGVtPwpXZSBvYnRhaW5lZCBkYXRhc2V0IGZyb20gS2FnZ2xlLiAKPGh0dHBzOi8vd3d3LmthZ2dsZS5jb20vc3VkYWxhaXJhamt1bWFyL25vdmVsLWNvcm9uYS12aXJ1cy0yMDE5LWRhdGFzZXQ+CjIuIFdobyBjb2xsZWN0ZWQvbWFpbnRhaW5zIHRoZW0/ClRoZSBkYXRhIHdhcyBleHRyYWN0ZWQgZnJvbSB0aGUgSm9obnMgSG9wa2lucyBVbml2ZXJzaXR5IGFuZCBpdCBjb250aW51b3VzbHkgdXBkYXRlcy4KMy4gV2hlbiAmIFdoeSB3ZXJlIHRoZXkgb3JpZ2luYWxseSBjb2xsZWN0ZWQ/ClRoaXMgQ29yb25hdmlydXMgZGF0YSBpcyBhdmFpbGFibGUgZnJvbSBKYW4uIDIybmQsIDIwMjAuIEl0IHdhcyBjb2xsZWN0ZWQgdG8gcHJlZGljdCBob3cgYW5kIHdoZW4gdGhlIHZpcnVzIHdvdWxkIGVuZCBhbmQgcHJvdmlkZSB0aW1lbHkgY29uZGl0aW9uIG9mIHRoZSBzcHJlYWRpbmcgb2YgdGhlIHZpcnVzIHRvIHRoZSBwdWJsaWMuIAo0LiBXaGF0IGRvZXMgYSBjYXNlIHJlcHJlc2VudCBpbiBlYWNoIGRhdGEgc291cmNlLCBhbmQgaG93IG1hbnkgdG90YWwgY2FzZXMgYXJlIGF2YWlsYWJsZT8KYGBge3J9Cm5yb3coY292aWRfMTlfZGF0YSkKYGBgClRoZSBjYXNlIHJlcHJlc2VudCBhbiBpbmRpdmlkdWFsIGV4cG9zZWQgdG8gdGhlIHZpcnVzLiBUaGVyZSBhcmUgMTEyOTkgY2FzZXMgaW4gdG90YWwuIAo1LiBXaGF0IGFyZSBzb21lIG9mIHRoZSB2YXJpYWJsZXMgdGhhdCB5b3UgcGxhbiB0byB1c2U/CmBgYHtyfQpuY29sKGNvdmlkXzE5X2RhdGEpCnN1bW1hcnkoY292aWRfMTlfZGF0YSkKc3RyKGNvdmlkXzE5X2RhdGEpCmBgYApUaGVyZSBhcmUgdG90YWwgb2YgOCB2YXJpYWJsZXMsIGFuZCB3ZSBwbGFubmVkIHRvIHVzZSAiQ291bnRyeS9SZWdpb24iLCAgIkRlYXRocyIsIGFuZCAiUmVjb3ZlcmVkIiB0byBkaXNjb3ZlciB0aGUgcmVzZWFyY2ggcXVlc3Rpb24uIAoKCiMjIyBJbnR1aXRpb24gUmVsYXRlZCB0byBSZXNlYXJjaCBRdWVzdGlvbgoxLiBDcmVhdGUgc29tZSBpbmZvcm1hdGl2ZSBwbG90cyBhbmQgc3VtbWFyeSBzdGF0aXN0aWNzIApgYGB7cn0KTmV3RGF0YSA8LSBjb3ZpZF8xOV9kYXRhWyAsYyg0LDcsOCldCiNDcmVhdGUgZGF0YSB0YWJsZSBncm91cGVkIGJ5IGNvdW50cnkKU3VtbWFyeVN0YXRzIDwtCiAgTmV3RGF0YSAlPiUKICBncm91cF9ieShgQ291bnRyeS9SZWdpb25gKSAlPiUKICBzdW1tYXJpc2UoY291bnQgPSBuKCksIGRlYXRoID0gc3VtKGlmZWxzZShEZWF0aHMgPT0gMCwgMCwgMSkpLCByZWNvdmVyZWQgPSBzdW0oaWZlbHNlKFJlY292ZXJlZCA9PSAwLCAwLCAxKSkpCiNwbG90cyB1c2luZyB3b3JsZCBtYXAKV29ybGRNYXAoU3VtbWFyeVN0YXRzLCBrZXkgPSBgQ291bnRyeS9SZWdpb25gLCBmaWxsID0gY291bnQpCmBgYAoyLiBEZXNjcmliZSBwcmVsaW1pbmFyeSBvYnNlcnZhdGlvbnMgYW5kIGludHVpdGlvbiBhYm91dCB0aGUgcmVzZWFyY2ggcXVlc3Rpb24KU29tZSBmYWN0b3JzIGNvbnRyaWJ1dGVkIHRvIHRoZSBncm93dGggcmF0ZSBvZiB0aGUgdmlydXMgbWlnaHQgZGVhbCB3aXRoIHRoZSBsb2NhdGlvbiB3aXRoIGl0IGNvcnJlc3BvbmRpbmcgaHVtaWRpdHkgYW5kIHdlYXRoZXIgdGVtcGVyYXR1cmUuIAoKCiMjIyBUd28gRGF0YSBTb3VyY2VzCgoKCgoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYWwgUHJvamVjdCBFREEiCmF1dGhvcjogIllpeGlhbyBKaWFuZzsgU2hhb2hhbiBXYW5nIgpkYXRlOiAiQXByaWwgM3JkLCAyMDIwIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBHdWlkaW5nIFF1ZXN0aW9uCiMjIyBXaGF0IGFyZSBzb21lIGZhY3RvcnMgdGhhdCBpbXBhY3QgdGhlIGdyb3d0aCByYXRlIG9mIHRoZSB2aXJ1cz8KCiMjIERhdGEgU291cmNlcwpgYGB7cn0Kcm0obGlzdCA9IGxzKCkpCmxpYnJhcnkocmVhZHIpCmxpYnJhcnkoRGF0YUNvbXB1dGluZykKbGlicmFyeShkcGx5cikKY292aWRfMTlfZGF0YSA8LSByZWFkX2NzdigiY292aWRfMTlfZGF0YS5jc3YiKQpgYGAKCiMjIyAxLiBXaGVyZSBkaWQgeW91IGZpbmQgdGhlbT8KV2Ugb2J0YWluZWQgZGF0YXNldCBmcm9tIEthZ2dsZS4gCjxodHRwczovL3d3dy5rYWdnbGUuY29tL3N1ZGFsYWlyYWprdW1hci9ub3ZlbC1jb3JvbmEtdmlydXMtMjAxOS1kYXRhc2V0PgojIyMgMi4gV2hvIGNvbGxlY3RlZC9tYWludGFpbnMgdGhlbT8KVGhlIGRhdGEgd2FzIGV4dHJhY3RlZCBmcm9tIHRoZSBKb2hucyBIb3BraW5zIFVuaXZlcnNpdHkgYW5kIGl0IGNvbnRpbnVvdXNseSB1cGRhdGVzLgojIyMgMy4gV2hlbiAmIFdoeSB3ZXJlIHRoZXkgb3JpZ2luYWxseSBjb2xsZWN0ZWQ/ClRoaXMgQ29yb25hdmlydXMgZGF0YSBpcyBhdmFpbGFibGUgZnJvbSBKYW4uIDIybmQsIDIwMjAuIEl0IHdhcyBjb2xsZWN0ZWQgdG8gcHJlZGljdCBob3cgYW5kIHdoZW4gdGhlIHZpcnVzIHdvdWxkIGVuZCBhbmQgcHJvdmlkZSB0aW1lbHkgY29uZGl0aW9uIG9mIHRoZSBzcHJlYWRpbmcgb2YgdGhlIHZpcnVzIHRvIHRoZSBwdWJsaWMuIAojIyMgNC4gV2hhdCBkb2VzIGEgY2FzZSByZXByZXNlbnQgaW4gZWFjaCBkYXRhIHNvdXJjZSwgYW5kIGhvdyBtYW55IHRvdGFsIGNhc2VzIGFyZSBhdmFpbGFibGU/CmBgYHtyfQpucm93KGNvdmlkXzE5X2RhdGEpCmBgYApUaGUgY2FzZSByZXByZXNlbnQgYW4gaW5kaXZpZHVhbCBleHBvc2VkIHRvIHRoZSB2aXJ1cy4gVGhlcmUgYXJlIDExMjk5IGNhc2VzIGluIHRvdGFsLiAKIyMjIDUuIFdoYXQgYXJlIHNvbWUgb2YgdGhlIHZhcmlhYmxlcyB0aGF0IHlvdSBwbGFuIHRvIHVzZT8KYGBge3J9Cm5jb2woY292aWRfMTlfZGF0YSkKc3VtbWFyeShjb3ZpZF8xOV9kYXRhKQpzdHIoY292aWRfMTlfZGF0YSkKYGBgClRoZXJlIGFyZSB0b3RhbCBvZiA4IHZhcmlhYmxlcywgYW5kIHdlIHBsYW5uZWQgdG8gdXNlICJDb3VudHJ5L1JlZ2lvbiIsICAiRGVhdGhzIiwgYW5kICJSZWNvdmVyZWQiIHRvIGRpc2NvdmVyIHRoZSByZXNlYXJjaCBxdWVzdGlvbi4gCgoKIyMgSW50dWl0aW9uIFJlbGF0ZWQgdG8gUmVzZWFyY2ggUXVlc3Rpb24KIyMjIDEuIENyZWF0ZSBzb21lIGluZm9ybWF0aXZlIHBsb3RzIGFuZCBzdW1tYXJ5IHN0YXRpc3RpY3MgCmBgYHtyfQpOZXdEYXRhIDwtIGNvdmlkXzE5X2RhdGFbICxjKDQsNyw4KV0KI0NyZWF0ZSBkYXRhIHRhYmxlIGdyb3VwZWQgYnkgY291bnRyeQpTdW1tYXJ5U3RhdHMgPC0KICBOZXdEYXRhICU+JQogIGdyb3VwX2J5KGBDb3VudHJ5L1JlZ2lvbmApICU+JQogIHN1bW1hcmlzZShjb3VudCA9IG4oKSwgZGVhdGggPSBzdW0oaWZlbHNlKERlYXRocyA9PSAwLCAwLCAxKSksIHJlY292ZXJlZCA9IHN1bShpZmVsc2UoUmVjb3ZlcmVkID09IDAsIDAsIDEpKSkKI3Bsb3RzIHVzaW5nIHdvcmxkIG1hcApXb3JsZE1hcChTdW1tYXJ5U3RhdHMsIGtleSA9IGBDb3VudHJ5L1JlZ2lvbmAsIGZpbGwgPSBjb3VudCkKYGBgCiMjIyAyLiBEZXNjcmliZSBwcmVsaW1pbmFyeSBvYnNlcnZhdGlvbnMgYW5kIGludHVpdGlvbiBhYm91dCB0aGUgcmVzZWFyY2ggcXVlc3Rpb24KU29tZSBmYWN0b3JzIGNvbnRyaWJ1dGVkIHRvIHRoZSBncm93dGggcmF0ZSBvZiB0aGUgdmlydXMgbWlnaHQgZGVhbCB3aXRoIHRoZSBsb2NhdGlvbiB3aXRoIGl0IGNvcnJlc3BvbmRpbmcgaHVtaWRpdHkgYW5kIHdlYXRoZXIgdGVtcGVyYXR1cmUuIAoKCiMjIFR3byBEYXRhIFNvdXJjZXMKCgoKCgo=</div>
 
 
 

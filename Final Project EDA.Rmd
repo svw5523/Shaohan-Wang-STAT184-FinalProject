@@ -1,0 +1,61 @@
+---
+title: "Final Project EDA"
+name: "Yixiao Jiang & Shaohan Wang"
+output: html_notebook
+---
+
+### Guiding Question
+What are some factors that impact the growth rate of the virus?
+
+### Data Sources
+```{r}
+rm(list = ls())
+library(readr)
+library(DataComputing)
+library(dplyr)
+covid_19_data <- read_csv("covid_19_data.csv")
+```
+
+1. Where did you find them?
+We obtained dataset from Kaggle. 
+<https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset>
+2. Who collected/maintains them?
+The data was extracted from the Johns Hopkins University and it continuously updates.
+3. When & Why were they originally collected?
+This Coronavirus data is available from Jan. 22nd, 2020. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public. 
+4. What does a case represent in each data source, and how many total cases are available?
+```{r}
+nrow(covid_19_data)
+```
+The case represent an individual exposed to the virus. There are 11299 cases in total. 
+5. What are some of the variables that you plan to use?
+```{r}
+ncol(covid_19_data)
+summary(covid_19_data)
+str(covid_19_data)
+```
+There are total of 8 variables, and we planned to use "Country/Region",  "Deaths", and "Recovered" to discover the research question. 
+
+
+### Intuition Related to Research Question
+1. Create some informative plots and summary statistics 
+```{r}
+NewData <- covid_19_data[ ,c(4,7,8)]
+#Create data table grouped by country
+SummaryStats <-
+  NewData %>%
+  group_by(`Country/Region`) %>%
+  summarise(count = n(), death = sum(ifelse(Deaths == 0, 0, 1)), recovered = sum(ifelse(Recovered == 0, 0, 1)))
+#plots using world map
+WorldMap(SummaryStats, key = `Country/Region`, fill = count)
+```
+2. Describe preliminary observations and intuition about the research question
+Some factors contributed to the growth rate of the virus might deal with the location with it corresponding humidity and weather temperature. 
+
+
+### Two Data Sources
+
+
+
+
+

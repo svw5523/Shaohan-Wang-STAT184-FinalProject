@@ -1,1 +1,1 @@
-# Yixiao-Jiang-STAT184
+# Yixiao Jiang & Shaohan Wang STAT184 Final Project

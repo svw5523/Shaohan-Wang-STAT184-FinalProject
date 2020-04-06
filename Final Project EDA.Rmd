@@ -1,62 +1,110 @@
 ---
 title: "Final Project EDA"
-author: "Yixiao Jiang; Shaohan Wang"
-date: "April 3rd, 2020"
-output: html_notebook
+author: "Yixiao Jiang & Shaohan Wang"
+date: "April 5th, 2020"
+output: 
+    html_notebook:
+    fig_height: 6
+    fig_width: 10
 ---
 
 ## Guiding Question
-### What are some factors that impact the growth rate of the virus?
+### What are the factors that might impact the spread of COVID-19 virus?
 
 ## Data Sources
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 rm(list = ls())
 library(readr)
 library(DataComputing)
 library(dplyr)
 covid_19_data <- read_csv("covid_19_data.csv")
+covid19_weather_data <- read.csv("covid19_weather_data.csv")
 ```
 
+## Two Data Sources
+### Primary data 
+covid_19_data: <https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset>
+
+### Other data sources 
+covid19_weather_data: <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24>
+
+## Become Acquainted with Data Sources
 ### 1. Where did you find them?
-We obtained dataset from Kaggle. 
+We obtained covid_19_data dataset from Kaggle. 
 <https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset>
+The covid19_weather_data dataset is also from Kaggle.
+<https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24>
+
 ### 2. Who collected/maintains them?
-The data was extracted from the Johns Hopkins University and it continuously updates.
+The covid_19_data dataset was extracted from the Johns Hopkins University and it continuously updates. 
+The covid19_weather_data dataset was made with the weather data collected from World Weather Online API and was inspired by Weather Impact on COVID19 Spread by JHU. 
+
 ### 3. When & Why were they originally collected?
-This Coronavirus data is available from Jan. 22nd, 2020. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public. 
+This Coronavirus data is available from Jan. 22nd, 2020. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public.
+The covid19_weather_data is available from Jan. 22nd, 2020 and up to Mar. 24th, 2020 (60 days). It was collected to help understand of COVID19 and viral transmission by some important climate features.
+
 ### 4. What does a case represent in each data source, and how many total cases are available?
 ```{r}
+# case of covid_19_data
 nrow(covid_19_data)
+# case of covid19_weather_data
+nrow(covid19_weather_data)
 ```
-The case represent an individual exposed to the virus. There are 11299 cases in total. 
+For covid_19_data, the case represent an individual exposed to the virus. There are 11299 cases in total. 
+For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. 
+
 ### 5. What are some of the variables that you plan to use?
 ```{r}
+# inspect covid_19_data
 ncol(covid_19_data)
 summary(covid_19_data)
 str(covid_19_data)
+# inspect covid19_weather_data
+ncol(covid19_weather_data)
+summary(covid19_weather_data)
+str(covid19_weather_data)
 ```
-There are total of 8 variables, and we planned to use "Country/Region",  "Deaths", and "Recovered" to discover the research question. 
-
+For covid_19_data, there are a total of 8 variables, and we planned to use "Country/Region",  "Deaths", and "Recovered" to discover the research question. 
+For covid19_weather_data, there are a total of 22 variables, and we planned to use "lat", "long", "temperature" and "humidity" to proceed and solve the project questions.
 
 ## Intuition Related to Research Question
 ### 1. Create some informative plots and summary statistics 
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# covid_19_data
 NewData <- covid_19_data[ ,c(4,7,8)]
-#Create data table grouped by country
+# Create data table grouped by country
 SummaryStats <-
   NewData %>%
   group_by(`Country/Region`) %>%
   summarise(count = n(), death = sum(ifelse(Deaths == 0, 0, 1)), recovered = sum(ifelse(Recovered == 0, 0, 1)))
-#plots using world map
+# plots using world map
 WorldMap(SummaryStats, key = `Country/Region`, fill = count)
+
+# covid19_weather_data
+# Create data table grouped by province/state 
+DataTable_Hubei <-
+  covid19_weather_data %>%
+  filter(Province.State == 'Hubei') # Hubei of China
+DataTable_NewYork <-
+  covid19_weather_data %>%
+  filter(Province.State == 'New York') # New York State of United States
+# Data Visualization of the change of temperature in Hubei of China
+DataTable_Hubei %>%
+  ggplot(aes(x = day, y = temperature)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  ylab('temperature(Celsius)') +
+  ggtitle('The change of temperature in Hubei') +
+  theme(plot.title = element_text(hjust = 0.5))
+# Data Visualization of the change of temperature in New York State of United States
+DataTable_NewYork %>%
+  ggplot(aes(x = day, y = temperature)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  ylab('temperature(Celsius)') +
+  ggtitle('The change of temperature in New York State') +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 ### 2. Describe preliminary observations and intuition about the research question
-Some factors contributed to the growth rate of the virus might deal with the location with it corresponding humidity and weather temperature. 
-
-
-## Two Data Sources
-
-
-
-
+Some factors contributed to the spread of COVID-19 virus might deal with the corresponding humidity and weather temperature in those regions.
 

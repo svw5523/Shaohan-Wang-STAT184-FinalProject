@@ -1,7 +1,7 @@
 # Yixiao Jiang & Shaohan Wang STAT184 Final Project
 
 ## Guiding Question
-### What are the factors that might impact the spread of COVID-19 virus?
+###### What are the factors that might impact the spread of COVID-19 virus?
 
 ## Two Data Sources
 ### Primary data 

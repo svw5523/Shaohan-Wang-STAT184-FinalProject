@@ -11,10 +11,8 @@
 
 ### Become Acquainted with Data Sources
 **1. Where did you find them?**
-- We obtained covid_19_data dataset from Kaggle. 
-<https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/>
-The covid19_weather_data dataset is also from Kaggle.
-- <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24/>
+- We obtained covid_19_data dataset from Kaggle. <https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/>
+- The covid19_weather_data dataset is also from Kaggle. <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24/>
 **2. Who collected/maintains them?**
 - The covid_19_data dataset was extracted from the Johns Hopkins University and it continuously updates. 
 - The covid19_weather_data dataset was made with the weather data collected from World Weather Online API and was inspired by Weather Impact on COVID19 Spread by JHU. 

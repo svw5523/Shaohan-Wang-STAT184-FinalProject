@@ -1,0 +1,67 @@
+---
+title: "Novel Coronavirus 2019 Project Draft"
+author: "Yixiao Jiang & Shaohan Wang"
+date: "April 10th, 2020"
+output: 
+    html_notebook:
+    fig_height: 6
+    fig_width: 10
+---
+
+
+# Introduction  
+  With the spreading of coronavirus, we are interested in the current condition of the spreading and what factors might impact the spread of COVID-19 virus are. Some key factors we focused on are temperature and humidity.  
+  Two major data sources used in the analysis are found in Kaggle:  
+1. The covid_19_data dataset was extracted from the Johns Hopkins University and it continuously updates. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public.
+  <https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset>  
+2. The covid19_weather_data dataset was made with the weather data collected from World Weather Online API and was inspired by Weather Impact on COVID19 Spread by JHU. It was collected to help understand of COVID19 and viral transmission by some important climate features.
+  <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24>  
+  
+
+# Analysis Method  
+## Data Preparation  
+
+```{r}
+rm(list = ls())
+#Relevant packages
+library(readr)
+library(DataComputing)
+library(dplyr)
+#Access datasets
+covid_19_data <- read_csv("covid_19_data.csv")
+covid19_weather_data <- read.csv("covid19_weather_data.csv")
+
+#Inspect datasets
+# no. of case in covid_19_data & covid19_weather_data
+nrow(covid_19_data)
+nrow(covid19_weather_data)
+#variables and structure of datasets
+str(covid_19_data)
+head(covid_19_data)
+str(covid19_weather_data)
+head(covid19_weather_data)
+
+```
+For covid_19_data, the case represent an individual exposed to the virus. There are 11299 cases in total. There are a total of 8 variables, and we will use "Country/Region",  "Deaths", and "Recovered" to discover the research question.  
+For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. There are 18056 cases. There are a total of 22 variables, and we will use "lat", "long", "temperature" and "humidity" to proceed and solve the project questions.  
+
+## Data Wrangling  
+
+
+
+## Data Visualization  
+
+
+
+
+
+
+# Conclusion  
+
+
+
+
+
+
+
+

@@ -20,7 +20,7 @@ output:
 
 # Analysis Method  
 ## Data Preparation  
-
+Uploading relevant packages and inpecting datasets:  
 ```{r}
 rm(list = ls())
 #Relevant packages
@@ -46,7 +46,30 @@ For covid_19_data, the case represent an individual exposed to the virus. There 
 For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. There are 18056 cases. There are a total of 22 variables, and we will use "lat", "long", "temperature" and "humidity" to proceed and solve the project questions.  
 
 ## Data Wrangling  
+1. Compare COVID-19 Cases with Average Global Temperature
+```{r}
+# covid_19_data
+NewData <- covid_19_data[ ,c(4,7,8)]
+# Create data table grouped by country
+SummaryStats <-
+  NewData %>%
+  group_by(`Country/Region`) %>%
+  summarise(count = n(), death = sum(ifelse(Deaths == 0, 0, 1)), recovered = sum(ifelse(Recovered == 0, 0, 1)))
+SummaryStats <- rename(SummaryStats, Country= `Country/Region`)
+# load global average temperature dataset
+GlobalLandTemperaturesByCountry <- read_csv("GlobalLandTemperaturesByCountry.csv")
+# Investigate past average temerature by countries
+Tempt_avg <-
+  GlobalLandTemperaturesByCountry %>%
+  group_by(Country) %>%
+  summarise(temp = mean(na.omit(AverageTemperature)))
+# Combine dataset tempt vs COVID cases
+COVID_tempt <-
+  left_join(SummaryStats, Tempt_avg)
 
+
+
+```
 
 
 ## Data Visualization  

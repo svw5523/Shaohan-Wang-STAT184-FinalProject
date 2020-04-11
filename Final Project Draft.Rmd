@@ -45,9 +45,10 @@ head(covid19_weather_data)
 For covid_19_data, the case represent an individual exposed to the virus. There are 11299 cases in total. There are a total of 8 variables, and we will use "Country/Region",  "Deaths", and "Recovered" to discover the research question.  
 For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. There are 18056 cases. There are a total of 22 variables, and we will use "lat", "long", "temperature" and "humidity" to proceed and solve the project questions.  
 
-## Data Wrangling  
+## Data Wrangling  & Data Visualization  
 1. Compare COVID-19 Cases with Average Global Temperature
 ```{r}
+#Data Wrangling
 # covid_19_data
 NewData <- covid_19_data[ ,c(4,7,8)]
 # Create data table grouped by country
@@ -63,24 +64,40 @@ Tempt_avg <-
   GlobalLandTemperaturesByCountry %>%
   group_by(Country) %>%
   summarise(temp = mean(na.omit(AverageTemperature)))
+US <-c("US","11.49")
+Tempt_avg <- rbind(Tempt_avg, US)
 # Combine dataset tempt vs COVID cases
 COVID_tempt <-
   left_join(SummaryStats, Tempt_avg)
+COVID_tempt$temp <- as.numeric(COVID_tempt$temp)
 
+
+#Data Visualization
+#World Map with average temerature
+WorldMap(COVID_tempt, key = Country, fill = temp)
+#World Map of reported COVID cases
+WorldMap(COVID_tempt, key = Country, fill = death)
+#Bargraph of no. of cases vs its corresponding temperature
+ggplot(COVID_tempt, aes(temp,count)) +
+  geom_line()
+
+```
+In order to investigate on the relationship between temperature and number of reported infected cases, we plot two variables on different maps. Since US has extreme number of cases in this dataset which makes it hard to distinguish from other countries, we plot another line graph to show the relationship between temperature and number of reported cases.  
+From the graph, we could observe that the number of cases become extremely bigger when the temperature approaches around 10 Celsius. And it becomes stable when the temperature increases.  
+
+
+2. Compare COVID-19 Cases with Humidity
+```{r}
 
 
 ```
-
-
-## Data Visualization  
-
 
 
 
 
 
 # Conclusion  
-
+Temperature is correlated with the spread of the coronavirus. And when the temperature is around 10 celsius, the cases happened most often. 
 
 
 

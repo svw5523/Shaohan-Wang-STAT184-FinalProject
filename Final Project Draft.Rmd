@@ -1,7 +1,7 @@
 ---
-title: "Novel Coronavirus 2019 Project Draft"
+title: "Novel Coronavirus 2019 Project"
 author: "Yixiao Jiang & Shaohan Wang"
-date: "April 12th, 2020"
+date: "April 24th, 2020"
 output: 
     html_notebook:
     fig_height: 6
@@ -33,6 +33,7 @@ library(readr)
 library(DataComputing)
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 #Access datasets
 covid_19_data <- read_csv("covid_19_data.csv")
 covid19_weather_data <- read.csv("covid19_weather_data.csv")
@@ -54,15 +55,16 @@ For covid19_weather_data, the case represents an individual province/state of di
 
 ### Data Wrangling  & Data Visualization  
 1. Compare COVID-19 Cases with Average Global Temperature
+###Data Wrangling
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-#Data Wrangling
 # covid_19_data
-NewData <- covid_19_data[ ,c(4,7,8)]
+NewData <- covid_19_data[ ,c(4,6,7,8)]
 # Create data table grouped by country
 SummaryStats <-
   NewData %>%
   group_by(`Country/Region`) %>%
-  summarise(count = n(), death = sum(ifelse(Deaths == 0, 0, 1)), recovered = sum(ifelse(Recovered == 0, 0, 1)))
+  summarise(confirmed = sum(Confirmed), death = sum(Deaths), 
+            recovered = sum(Recovered))
 SummaryStats <- rename(SummaryStats, Country= `Country/Region`)
 # load global average temperature dataset
 GlobalLandTemperaturesByCountry <- read_csv("GlobalLandTemperaturesByCountry.csv")
@@ -76,24 +78,57 @@ Tempt_avg <- rbind(Tempt_avg, US)
 # Combine dataset tempt vs COVID cases
 COVID_tempt <-
   left_join(SummaryStats, Tempt_avg)
+n <- nrow(COVID_tempt)
+#Delete Country if temerature is unknown
+for(i in 1:n){
+  if(is.na(COVID_tempt$temp[i])){
+    COVID_tempt = COVID_tempt[-i, ]
+  }
+  else{
+    COVID_tempt$temp[i] = COVID_tempt$temp[i]
+  }
+}
 COVID_tempt$temp <- as.numeric(COVID_tempt$temp)
+#inspect dataset
+head(COVID_tempt)
+# Simplified dataset
+COVID_tempt_combined <- 
+  COVID_tempt %>%
+  gather(key = condition, value = casesnum, confirmed,death,recovered)
+#inspect dataset
+head(COVID_tempt_combined)
+```
 
 
-#Data Visualization
+
+###Data Visualization
+```{r}
 #World Map with average temerature
 WorldMap(COVID_tempt, key = Country, fill = temp)
 
 #World Map of reported COVID cases
 WorldMap(COVID_tempt, key = Country, fill = death)
 
-#line graph of no. of cases vs its corresponding temperature
-ggplot(COVID_tempt, aes(x=temp,y=count)) +
-  geom_line()
+#graph of no. of cases vs its corresponding temperature
+graph <- ggplot(data = COVID_tempt, aes(x = temp, y = confirmed))
+layer1 <- geom_point(data = COVID_tempt, aes(color = temp))
+layer2 <- geom_vline(xintercept = 11.49)
+graph + layer1 + layer2 +xlab('Temperature') +
+  ylab('Number of Confirmed Cases') +
+  ggtitle('Relationship between Confirmed Cases and Temperature')
+
+#graph combine three conditions
+graph <- ggplot(data = COVID_tempt_combined, aes(x = temp, y = casesnum))
+layer1 <- geom_point(data = COVID_tempt_combined, aes(color = condition))
+layer2 <- geom_vline(xintercept = 11.49)
+graph + layer1 + layer2 +xlab('Temperature') +
+  ylab('Number of Cases') +
+  ggtitle('Relationship between Cases and Temperature')
 
 ```
 * We use "covid_19_data" as the primary data source and joined it by data table "GlobalLandTemperatureByCountry" with detailed temperature information in different countries. 
 * In order to investigate on the relationship between temperature and number of reported infected cases, we plot two variables on different maps. Since US has extreme number of cases in this dataset which makes it hard to distinguish from other countries, we plot another line graph to show the relationship between temperature and number of reported cases.  
-* From the graphs, we could observe that the number of cases become extremely bigger when the temperature approaches around 10 Celsius. And it becomes stable when the temperature increases.  
+* From the graphs, we could observe that the number of cases become extremely bigger when the temperature approaches around 12 Celsius. And it becomes stable when the temperature increases.  
 
 
 2. Compare COVID-19 Cases with Humidity
@@ -160,4 +195,3 @@ covid19_humidity_Italy %>%
 1. Temperature does have relationship or even is correlated with the spread of the coronavirus. And when the temperature is around 10 celsius, the cases happened most often. 
 
 2. Humidity does not have clear relationship or correlation with the spread of the coronovirus. But we did observe some minor relationships between these two factors in 60 days in China with high uncertainty. 
-

@@ -39,10 +39,10 @@ covid_19_data <- read_csv("covid_19_data.csv")
 covid19_weather_data <- read.csv("covid19_weather_data.csv")
 
 #Inspect datasets
-# no. of case in covid_19_data & covid19_weather_data
+#No. of case in covid_19_data & covid19_weather_data
 nrow(covid_19_data)
 nrow(covid19_weather_data)
-#variables and structure of datasets
+#Variables and structure of datasets
 str(covid_19_data)
 str(covid19_weather_data)
 head(covid_19_data)
@@ -54,10 +54,11 @@ For covid_19_data, the case represent an individual exposed to the virus. There 
 For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. There are 18056 cases. There are a total of 22 variables, and we will use "Province.State", "Country.Region", "temperature" and "humidity" to proceed and solve the project questions.  
 
 ### Data Wrangling  & Data Visualization  
-1. Compare COVID-19 Cases with Average Global Temperature
-###Data Wrangling
+**1. Compare COVID-19 Cases with Average Global Temperature**  
+
+***Data Wrangling***
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-# covid_19_data
+# Covid_19_data
 NewData <- covid_19_data[ ,c(4,6,7,8)]
 # Create data table grouped by country
 SummaryStats <-
@@ -66,7 +67,7 @@ SummaryStats <-
   summarise(confirmed = sum(Confirmed), death = sum(Deaths), 
             recovered = sum(Recovered))
 SummaryStats <- rename(SummaryStats, Country= `Country/Region`)
-# load global average temperature dataset
+# Load global average temperature dataset
 GlobalLandTemperaturesByCountry <- read_csv("GlobalLandTemperaturesByCountry.csv")
 # Investigate past average temerature by countries
 Tempt_avg <-
@@ -79,7 +80,7 @@ Tempt_avg <- rbind(Tempt_avg, US)
 COVID_tempt <-
   left_join(SummaryStats, Tempt_avg)
 n <- nrow(COVID_tempt)
-#Delete Country if temerature is unknown
+# Delete Country if temerature is unknown
 for(i in 1:n){
   if(is.na(COVID_tempt$temp[i])){
     COVID_tempt = COVID_tempt[-i, ]
@@ -89,51 +90,53 @@ for(i in 1:n){
   }
 }
 COVID_tempt$temp <- as.numeric(COVID_tempt$temp)
-#inspect dataset
+# Inspect dataset
 head(COVID_tempt)
 # Simplified dataset
 COVID_tempt_combined <- 
   COVID_tempt %>%
   gather(key = condition, value = casesnum, confirmed,death,recovered)
-#inspect dataset
+# Inspect dataset
 head(COVID_tempt_combined)
 ```
 
 
 
-###Data Visualization
+***Data Visualization***
+
 ```{r}
-#World Map with average temerature
+# World Map with average temerature
 WorldMap(COVID_tempt, key = Country, fill = temp)
 
-#World Map of reported COVID cases
-WorldMap(COVID_tempt, key = Country, fill = death)
+# World Map of reported COVID cases
+WorldMap(COVID_tempt, key = Country, fill = confirmed)
 
-#graph of no. of cases vs its corresponding temperature
+# Graph of no. of cases vs its corresponding temperature
 graph <- ggplot(data = COVID_tempt, aes(x = temp, y = confirmed))
 layer1 <- geom_point(data = COVID_tempt, aes(color = temp))
 layer2 <- geom_vline(xintercept = 11.49)
 graph + layer1 + layer2 +xlab('Temperature') +
   ylab('Number of Confirmed Cases') +
-  ggtitle('Relationship between Confirmed Cases and Temperature')
+  ggtitle('Confirmed Cases vs. Temperature')
 
-#graph combine three conditions
+# Graph combine three conditions
 graph <- ggplot(data = COVID_tempt_combined, aes(x = temp, y = casesnum))
 layer1 <- geom_point(data = COVID_tempt_combined, aes(color = condition))
 layer2 <- geom_vline(xintercept = 11.49)
 graph + layer1 + layer2 +xlab('Temperature') +
   ylab('Number of Cases') +
-  ggtitle('Relationship between Cases and Temperature')
+  ggtitle('Cases vs. Temperature')
 
 ```
 * We use "covid_19_data" as the primary data source and joined it by data table "GlobalLandTemperatureByCountry" with detailed temperature information in different countries. 
-* In order to investigate on the relationship between temperature and number of reported infected cases, we plot two variables on different maps. Since US has extreme number of cases in this dataset which makes it hard to distinguish from other countries, we plot another line graph to show the relationship between temperature and number of reported cases.  
+* In order to investigate on the relationship between temperature and number of reported infected cases, we plot two variables on different maps. Since US has extreme number of cases in this dataset which makes it hard to distinguish from other countries, we plot another point graph to show the relationship between temperature and number of reported cases.  
 * From the graphs, we could observe that the number of cases become extremely bigger when the temperature approaches around 12 Celsius. And it becomes stable when the temperature increases.  
 
 
-2. Compare COVID-19 Cases with Humidity
+**2. Compare COVID-19 Cases with Humidity**  
+
+***Data Wrangling***
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-# Data Wrangling
 # covid19_weather_data
 covid19_weather_data <-
   covid19_weather_data %>% 
@@ -156,8 +159,12 @@ covid19_humidity_Italy <-
   covid19_weather_data %>%
   filter(Country.Region == 'Italy') %>%
   select(Country.Region, humidity, confirmed)
+```
 
-# Data Visualization
+
+
+***Data Visualization***
+```{r}
 # Scatterplot for Hubei, China
 covid19_humidity_Hubei_China %>%
   ggplot(aes(x = confirmed, y = humidity)) +

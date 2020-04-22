@@ -21,6 +21,7 @@ output:
   <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24>  
   
   One other data sources used in the analysis:  
+  
 The GlobalLandTemperatureByCountry dataset contains very clear and detailed temperature information since 1743 for each country in each month.
 
 ## Analysis Method  
@@ -101,7 +102,8 @@ COVID_tempt_combined <-
 # Inspect dataset
 head(COVID_tempt_combined)
 ```
-
+* We used "covid_19_data" to obtain the number of confirmed cases and combined it with "Global Temperature data" to investigate the connection between the virus and global temperature. 
+* We further used some data wrangling methods to obtain different data frames("COVID_temp","COVID_temp_combined") based on same information in order to optimize the data visualization. 
 
 
 ***Data Visualization***

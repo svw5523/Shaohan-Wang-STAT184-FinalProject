@@ -1,0 +1,221 @@
+---
+title: "Novel Coronavirus 2019 Project"
+author: "Yixiao Jiang & Shaohan Wang"
+date: "April 24th, 2020"
+output: 
+    html_notebook:
+    fig_height: 6
+    fig_width: 10
+---
+
+
+## Introduction  
+  **With the spreading of coronavirus, we are interested in the current condition of the spreading and which factors might impact the spread of COVID-19 virus. Some key factors we focused on are temperature and humidity.**  
+  
+  Two major data sources used in the analysis are found in Kaggle:  
+
+1. The covid_19_data dataset was extracted from the Johns Hopkins University and it continuously updates. It was collected to predict how and when the virus would end and provide timely condition of the spreading of the virus to the public. The dataset contains the change of detailed information of covid19 cases in each specfic area or countries up to the updata date. The dataset cotains the information starting from January 22 to April 2, 2020.
+  <https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset>  
+
+2. The covid19_weather_data dataset was made with the weather data collected from World Weather Online API and was inspired by Weather Impact on COVID19 Spread by JHU. It was collected to help understand of COVID19 and viral transmission by some important climate features. The dataset contains the change of some detailed local information (including climates) and confirmed cases in 60 day period for each area or countries. The dataset cotains the information starting from January 22 to March 24, 2020.
+  <https://www.kaggle.com/hbfree/covid19formattedweatherjan22march24>  
+  
+  One other data sources used in the analysis:  
+The GlobalLandTemperatureByCountry dataset contains very clear and detailed temperature information since 1743 for each country in each month.
+
+## Analysis Method  
+### Data Preparation  
+Uploading relevant packages and inpecting datasets:  
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+rm(list = ls())
+
+#Relevant packages
+library(readr)
+library(DataComputing)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+#Access datasets
+covid_19_data <- read_csv("covid_19_data.csv")
+covid19_weather_data <- read.csv("covid19_weather_data.csv")
+
+#Inspect datasets
+#No. of case in covid_19_data & covid19_weather_data
+nrow(covid_19_data)
+nrow(covid19_weather_data)
+#Variables and structure of datasets
+str(covid_19_data)
+str(covid19_weather_data)
+head(covid_19_data)
+head(covid19_weather_data)
+
+```
+For covid_19_data, the case represent an individual exposed to the virus. There are 11299 cases in total. There are a total of 8 variables, and we will use "Country/Region",  "Deaths", and "Recovered" to discover the research question.  
+
+For covid19_weather_data, the case represents an individual province/state of different countries in each of the 60 days with detailed covid-19 cases information and local weather features. There are 18056 cases. There are a total of 22 variables, and we will use "Province.State", "Country.Region", "temperature" and "humidity" to proceed and solve the project questions.  
+
+### Data Wrangling  & Data Visualization  
+**1. Compare COVID-19 Cases with Average Global Temperature**  
+
+***Data Wrangling***
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# Covid_19_data
+NewData <- covid_19_data[ ,c(4,6,7,8)]
+# Create data table grouped by country
+SummaryStats <-
+  NewData %>%
+  group_by(`Country/Region`) %>%
+  summarise(confirmed = sum(Confirmed), death = sum(Deaths), 
+            recovered = sum(Recovered))
+SummaryStats <- rename(SummaryStats, Country= `Country/Region`)
+# Load global average temperature dataset
+GlobalLandTemperaturesByCountry <- read_csv("GlobalLandTemperaturesByCountry.csv")
+# Investigate past average temerature by countries
+Tempt_avg <-
+  GlobalLandTemperaturesByCountry %>%
+  group_by(Country) %>%
+  summarise(temp = mean(na.omit(AverageTemperature)))
+US <-c("US","11.49")
+Tempt_avg <- rbind(Tempt_avg, US)
+# Combine dataset tempt vs COVID cases
+COVID_tempt <-
+  left_join(SummaryStats, Tempt_avg)
+n <- nrow(COVID_tempt)
+# Delete Country if temerature is unknown
+for(i in 1:n){
+  if(is.na(COVID_tempt$temp[i])){
+    COVID_tempt = COVID_tempt[-i, ]
+  }
+  else{
+    COVID_tempt$temp[i] = COVID_tempt$temp[i]
+  }
+}
+COVID_tempt$temp <- as.numeric(COVID_tempt$temp)
+# Inspect dataset
+head(COVID_tempt)
+# Simplified dataset
+COVID_tempt_combined <- 
+  COVID_tempt %>%
+  gather(key = condition, value = casesnum, confirmed,death,recovered)
+# Inspect dataset
+head(COVID_tempt_combined)
+```
+
+
+
+***Data Visualization***
+
+```{r}
+# World Map with average temerature
+WorldMap(COVID_tempt, key = Country, fill = temp)
+
+# World Map of reported COVID cases
+WorldMap(COVID_tempt, key = Country, fill = confirmed)
+
+# Graph of no. of cases vs its corresponding temperature
+graph <- ggplot(data = COVID_tempt, aes(x = temp, y = confirmed))
+layer1 <- geom_point(data = COVID_tempt, aes(color = temp))
+layer2 <- geom_vline(xintercept = 11.49)
+graph + layer1 + layer2 +xlab('Temperature') +
+  ylab('Number of Confirmed Cases') +
+  ggtitle('Confirmed Cases vs. Temperature')
+
+# Graph combine three conditions
+graph <- ggplot(data = COVID_tempt_combined, aes(x = temp, y = casesnum))
+layer1 <- geom_point(data = COVID_tempt_combined, aes(color = condition))
+layer2 <- geom_vline(xintercept = 11.49)
+graph + layer1 + layer2 +xlab('Temperature') +
+  ylab('Number of Cases') +
+  ggtitle('Cases vs. Temperature')
+
+```
+* We use "covid_19_data" as the primary data source and joined it by data table "GlobalLandTemperatureByCountry" with detailed temperature information in different countries. 
+* In order to investigate on the relationship between temperature and number of reported infected cases, we plot two variables on different maps. Since US has extreme number of cases in this dataset which makes it hard to distinguish from other countries, we plot another point graph to show the relationship between temperature and number of reported cases.  
+* From the graphs, we could observe that the number of cases become extremely larger when the temperature approaches around 12 Celsius. And it becomes stable when the temperature increases.  
+
+
+**2. Compare COVID-19 Cases with Humidity**  
+
+***Data Wrangling***
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+# covid19_weather_data
+covid19_weather_data <-
+  covid19_weather_data %>% 
+  filter(humidity > 0, confirmed >= 0) # clean the dataset
+
+# Each world countries' average humidity level and total number of confirmed cases over 60 day period and find 10 countries with the highest confirmed cases
+covid19_humidity_country <-  
+  covid19_weather_data %>%
+  group_by(Country.Region,day) %>%
+  summarise(avg_humidity = mean(humidity, na.rm = TRUE),
+            number_confirmed = sum(confirmed, na.rm = TRUE)) %>%
+  group_by(Country.Region) %>%
+  summarise(avg_humidity = mean(avg_humidity, na.rm = TRUE),
+            number_confirmed = max(number_confirmed, na.rm = TRUE)) %>%
+  select(Country.Region, avg_humidity, number_confirmed) %>%
+  mutate(avg_humidity = round(avg_humidity, 2)) %>%
+  filter(row_number(desc(number_confirmed)) <= 10)
+head(covid19_humidity_country) # inspect data
+
+
+# China's humidity level and number of confirmed cases in 60 days
+covid19_humidity_China <-  
+  covid19_weather_data %>%
+  filter(Country.Region == 'China') %>%
+  group_by(Country.Region, day) %>%
+  summarise(humidity = mean(humidity, na.rm = TRUE),
+            confirmed = sum(confirmed, na.rm = TRUE)) %>%
+  select(Country.Region, humidity, confirmed)
+head(covid19_humidity_China) # inspect data
+
+# Italy's humidity level and number of confirmed cases in 60 days
+covid19_humidity_Italy <-  
+  covid19_weather_data %>%
+  filter(Country.Region == 'Italy') %>%
+  select(Country.Region, humidity, confirmed)
+head(covid19_humidity_Italy) # inspect data
+```
+* We use "covid19_weather_data" as the primary data source to test the relationship between the humidity level and the spread of Coronavirus. 
+* We create three useful data tables by doing data wrangling to the primary data source "covid19_weather_data". "covid19_humidity_country" contains the average humidity level and total confirmed cases for the 10 severely affected countries over the 60 day period. "covid19_humidity_China" and "covid19_humidity_Italy" contains the humidity level and confirmed cases in each of the 60 days for China and Italy. 
+
+
+***Data Visualization***
+```{r}
+# Bar charts for world country 
+covid19_humidity_country %>%
+  ggplot(aes(x = reorder(Country.Region, -number_confirmed), y = number_confirmed)) +
+  geom_bar(stat = 'identity', width = 0.9, aes(fill = avg_humidity)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
+  xlab('average humidity in each country') +
+  ylab('total confirmed cases in each country') +
+  ggtitle('Relationship between confirmed cases and humidity for top10 countries') 
+
+  
+# Scatterplot for China
+covid19_humidity_China %>%
+  ggplot(aes(x = confirmed, y = humidity)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  xlab('growth of confirmed cases in 60 days in China') +
+  ylab('change of humidity in 60 days in China') +
+  ggtitle('Relationship between confirmed cases and humidity in 60 days in China')
+
+# Scatterplot for Italy
+covid19_humidity_Italy %>%
+  ggplot(aes(x = confirmed, y = humidity)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  xlab('growth of confirmed cases in 60 days in Italy') +
+  ylab('change of humidity in 60 days in Italy') +
+  ggtitle('Relationship between confirmed cases and humidity in 60 days in Italy')
+
+```
+* In order to investigate on the relationship between humidity and number of reported infected cases for severely affected countries (top 10 countries), we plot three variables on a bar chart. Based on the graph, Iran has the highest average humidity level in this period, but does not face the highest confirmed cases number. Italy and United States, instead, have more cases, but have relatively lower humidity level in this period.
+* In order to investigate on the relationship between humidity and number of reported infected cases in a specific time period, we plot two variables on two scatterplots. We choose China and Italy to mainly focus on because they are severely influenced by the virus from January 22 to March 24. The case of each China and Italy's graphs represents the information in one day.
+* From the graphs, due to the large confidence interval which means high uncertainty, there is no clear correlation between growth of number of confirmed cases and the change of humidity in 60 days. Besides, countries with relatively larger number of the confirmed cases do not necessarily have high or low average humidity levels at the same time over the 60 days. 
+
+## Conclusion  
+1. Temperature does have relationship or even is (weakly) correlated with the spread of the coronavirus. And when the temperature is around 12 celsius, the cases happened most often. 
+
+2. Humidity does not have clear relationship or correlation with the spread of the coronovirus. But we did observe some minor relationships between these two factors in 60 days in China with high uncertainty. 

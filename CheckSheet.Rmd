@@ -18,10 +18,10 @@ output:  html_notebook
 *Description: (1) Analysis includes at least two different data sources. (2) Primary data source may NOT be loaded from an R package--though supporting data may. (3) Access to all data sources is contained within the analysis. (4) Imported data is inspected at beginning of analysis using one or more R functions: e.g., str, glimpse, head, tail, names, nrow, etc*
 
 (A) .Rmd Line numbers where at least two different data sources are imported:  
-
+Line 40 -- Line 42
 
 (B) .Rmd Line numbers for inspecting data intake:  
-
+Line 44 -- Line 52
 
 ### Data Wrangling (5 out of 8 required)
 
@@ -29,28 +29,28 @@ output:  html_notebook
 
 
 (A) .Rmd Line number(s) for general data wrangling: 
-
+Line 66, Line 75, Line 149, Line 174, Line 164
 
 (B) .Rmd Line number(s) for a join operation: 
-
+Line 84
 
 (C) .Rmd Line number(s) for a spread or gather operation (or equivalent):
-
+Line 101
 
 (D) .Rmd Line number(s) for use of regular expressions: 
-
+NA
 
 (E) .Rmd Line number(s) for use of reduction and/or transformation functions: 
-
+Line 70, Line 71, Line 79, Line 153, Line 154, Line 156, Line 157, Line 169, Line 170
 
 (F) .Rmd Line number(s) for use of user-defined functions: 
-
+NA
 
 (G) .Rmd Line number(s) for use of loops and/or control flow: 
-
+Line 87 -- Line 94
 
 (H) .Rmd Line number(s) for use of machine learning (not "wrangling" but scored here): 
-
+NA
 
 
 ### Data Visualization (3 of 5 required)
@@ -59,16 +59,15 @@ output:  html_notebook
 
 
 (A) .Rmd Line number(s) for use of mulitple different geoms:  
-
+Line 119 - Line 124, line 127 - Line 132, Line 188 - Line 212
 (B) .Rmd Line number(s) for use of multiple aesthetics:  
-
+Line 128, Line 120, Line 190
 (C) .Rmd Line number(s) for use of layered graphics:  
-
+Line 119 - Line 121, line 127 - Line 132, Line 201, Line 210
 (D) .Rmd Line number(s) for use of leaflet maps:  
-
+Line 113, Line 116
 (E) .Rmd Line number(s) for use of decision tree or dendogram results:    
-
-
+NA
 
 
 ### Other requirements (Nothing for you to report in this Guidance Document)
@@ -82,6 +81,5 @@ output:  html_notebook
 (D) *Overall Quality:* Submitted project shows significant effort to produce a high-quality and thoughtful analysis that showcases STAT 184 skills. (2) The project must be self-contained, such that the analysis can be entirely rerun without errors. (3) Analysis is coherent, well-organized, and free of extraneous content such as data dumps, unrelated graphs, and other content that is not overtly connected to the research question.
 
 (E) *EXTRA CREDIT* (1) Project is submitted as a self-contained GitHub Repo (2) project submission is a functioning github.io webpage generated for the project Repo. Note: a link to the GitHub Repo itself will be awarded partial credit, but does not itself qualify as a "webpage" of the analysis.
-
 
 

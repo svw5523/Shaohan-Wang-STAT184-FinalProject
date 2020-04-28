@@ -183,14 +183,14 @@ head(covid19_humidity_Italy) # inspect data
 
 
 ***Data Visualization***
-```{r}
+```{r fig.height=5, fig.width=8}
 # Bar charts for world country 
 covid19_humidity_country %>%
   ggplot(aes(x = reorder(Country.Region, -number_confirmed), y = number_confirmed)) +
   geom_bar(stat = 'identity', width = 0.9, aes(fill = avg_humidity)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) +
-  xlab('average humidity in each country') +
-  ylab('total confirmed cases in each country') +
+  xlab('countries') +
+  ylab('total confirmed cases') +
   ggtitle('Relationship between confirmed cases and humidity for top10 countries') 
 
   
@@ -199,8 +199,8 @@ covid19_humidity_China %>%
   ggplot(aes(x = confirmed, y = humidity)) +
   geom_point() + 
   geom_smooth(method = 'lm') +
-  xlab('growth of confirmed cases in 60 days in China') +
-  ylab('change of humidity in 60 days in China') +
+  xlab('growth of confirmed cases in 60 days') +
+  ylab('change of humidity in 60 days') +
   ggtitle('Relationship between confirmed cases and humidity in 60 days in China')
 
 # Scatterplot for Italy
@@ -208,8 +208,8 @@ covid19_humidity_Italy %>%
   ggplot(aes(x = confirmed, y = humidity)) +
   geom_point() + 
   geom_smooth(method = 'lm') +
-  xlab('growth of confirmed cases in 60 days in Italy') +
-  ylab('change of humidity in 60 days in Italy') +
+  xlab('growth of confirmed cases in 60 days') +
+  ylab('change of humidity in 60 days') +
   ggtitle('Relationship between confirmed cases and humidity in 60 days in Italy')
 
 ```
@@ -220,4 +220,4 @@ covid19_humidity_Italy %>%
 ## Conclusion  
 1. Temperature does have relationship or even is (weakly) correlated with the spread of the coronavirus. And when the temperature is around 12 celsius, the cases happened most often. 
 
-2. Humidity does not have clear relationship or correlation with the spread of the coronovirus. But we did observe some minor relationships between these two factors in 60 days in China with high uncertainty. 
+2. Humidity does not have clear relationship or correlation with the spread of the coronavirus. But we did observe some minor relationships between these two factors in 60 days in China with high uncertainty. 
